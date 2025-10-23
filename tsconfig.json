@@ -6,9 +6,10 @@
   ],
   "compilerOptions": {
     "paths": {
-      "#shared": ["./shared/*"],
-      "#client": ["./src/*"],
-      "#server": ["./server/*"]
+      "server/*": ["./server/*"],
+      "shared/*": ["./shared/*"],
+      "#server/*": ["./server/*"],
+      "#client/*": ["./src/*"]
     }
   }
 }

@@ -21,8 +21,10 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
+      "server/*": ["./server/*"],
+      "shared/*": ["./shared/*"],
       "#server/*": ["./server/*"],
-      "#shared/*": ["./shared/*"]
+      "#client/*": ["./src/*"]
     }
   },
   "include": ["vite.config.ts", "server"]

@@ -23,8 +23,10 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "#client/*": ["./src/*"],
-      "#shared/*": ["./shared/*"]
+      "client/*": ["./src/*"],
+      "shared/*": ["./shared/*"],
+      "#server/*": ["./server/*"],
+      "#client/*": ["./src/*"]
     }
   },
   "include": ["src", "tests"]

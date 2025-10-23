@@ -1,12 +1,16 @@
+import dotenv from "dotenv";
+
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
 
-import { env } from "#server/env.ts";
-import { auth } from "#server/lib/auth.ts";
+import { env } from "../server/env";
+import { auth } from "../server/lib/auth.ts";
 
-import { apiRouter } from '#server/api'
+import { apiRouter } from '../server/api'
 
+``
+dotenv.config();
 const app = new Hono()
   .get("/health", (c) => {
     return c.json({
@@ -47,3 +51,5 @@ serve({
 });
 
 console.log(`App is running on port 4001`);
+
+// process.env.yyyyvt
