@@ -35,11 +35,29 @@ const api = new Hono()
   })
   .on(["POST", "GET"], "/auth/*", async (c) => {
   const res = await auth.handler(c.req.raw);
-  // Copy response headers to ensure CORS headers apply
+
+  // Clone headers and override CORS
   const headers = new Headers(res.headers);
-  // If Hono set CORS headers earlier, keep them
-  c.res.headers.forEach((v, k) => headers.set(k, v));
-  return new Response(res.body, { status: res.status, headers });
+  const origin = c.req.header("origin");
+
+  const allowedOrigins = [
+    "https://sm-unity3.vercel.app",
+    "https://sm-unity3-5rnqdzddl-adrian-s-projects-b3352c4c.vercel.app",
+    "http://localhost:4000",
+  ];
+
+  if (origin && allowedOrigins.includes(origin)) {
+    headers.set("Access-Control-Allow-Origin", origin);
+    headers.set("Vary", "Origin");
+  }
+  headers.set("Access-Control-Allow-Credentials", "true");
+  headers.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  return new Response(res.body, {
+    status: res.status,
+    headers,
+  });
 })
   .route("/", apiRouter);
 
