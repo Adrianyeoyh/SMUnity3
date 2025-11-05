@@ -33,7 +33,14 @@ const api = new Hono()
       { "Content-Type": "application/javascript" }
     );
   })
-  .on(["POST", "GET"], "/auth/*", (c) => auth.handler(c.req.raw))
+  .on(["POST", "GET"], "/auth/*", async (c) => {
+  const res = await auth.handler(c.req.raw);
+  // Copy response headers to ensure CORS headers apply
+  const headers = new Headers(res.headers);
+  // If Hono set CORS headers earlier, keep them
+  c.res.headers.forEach((v, k) => headers.set(k, v));
+  return new Response(res.body, { status: res.status, headers });
+})
   .route("/", apiRouter);
 
 const app = new Hono()
