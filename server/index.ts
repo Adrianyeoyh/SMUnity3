@@ -4,6 +4,9 @@ import { env } from "./env";
 import { auth } from "./lib/auth";
 import { apiRouter } from "./api";
 import { authMiddleware } from "./middlewares/auth";
+// tell Vercel to run this file on the edge runtime
+export const config = { runtime: "edge" };
+
 
 const api = new Hono()
   .use(authMiddleware)
