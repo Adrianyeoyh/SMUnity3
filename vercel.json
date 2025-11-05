@@ -1,8 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "bunVersion": "1.x",
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/server/index.ts" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  "functions": {
+    "server/index.ts": {
+      "runtime": "edge"
+    }
+  },
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/server/index.ts" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
