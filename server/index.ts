@@ -34,8 +34,24 @@ const app = new Hono()
   .use("/*", serveStatic({ root: "./dist/static" }))
   .get("*", serveStatic({ path: "./dist/static/index.html" }));
 
-export default {
-  port: process.env.NODE_ENV == "development" ? 4001 : 4000,
-  ...app
-}
+// export default {
+//   port: process.env.NODE_ENV == "development" ? 4001 : 4000,
+//   ...app
+// }
 
+
+app.onError((err, c) => {
+  console.error("🔥 Server error:", err);
+  return c.json(
+    {
+      error: "Internal Server Error",
+      message: err.message,
+      stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
+    },
+    500
+  );
+});
+
+
+// ✅ Vercel still gets a fetch handler
+export default app.fetch;
